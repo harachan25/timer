@@ -73,6 +73,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         pickerView.dataSource = self
     }
     
+    
+    func createDateFormat(){
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            dateFormatter.locale = Locale(identifier: "ja_JP")
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
+    }
+    
+    //MARK: timer
     @objc func onTimerCalled(){
         updateLabel()
         countdown -= 1
@@ -98,14 +107,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         present(stopAlert, animated: true)
     }
     
-    func createDateFormat(){
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        dateFormatter.calendar = Calendar(identifier: .gregorian)
-    }
-    
-    
     func startTimer(time: Int){
         countdown = time//残り時間をtime秒に
         
@@ -117,30 +118,35 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         timer.fire()//start timer
     }
     
-    
-    @IBAction func select30seconds(){
-        startTimer(time: 30)
-        timeLabel.text = "00:30"
-        startTime = 30
-        print("timer setted 30 sec")
-    }
-    @IBAction func select1mseconds(){
-        startTimer(time: 60)
-        timeLabel.text = "01:00"
-        startTime = 60
-        print("timer setted 60 sec")
-    }
-    @IBAction func select5mseconds(){
-        startTimer(time: 300)
-        timeLabel.text = "05:00"
-        startTime = 300
-        print("timer setted 300 sec")
-    }
-    @IBAction func select10mseconds(){
-        startTimer(time: 600)
-        timeLabel.text = "10:00"
-        startTime = 600
-        print("timer setted 600 sec")
+//    @IBAction func select30seconds(){
+//        startTimer(time: 30)
+//        timeLabel.text = "00:30"
+//        startTime = 30
+//        print("timer setted 30 sec")
+//    }
+//    @IBAction func select1mseconds(){
+//        startTimer(time: 60)
+//        timeLabel.text = "01:00"
+//        startTime = 60
+//        print("timer setted 60 sec")
+//    }
+//    @IBAction func select5mseconds(){
+//        startTimer(time: 300)
+//        timeLabel.text = "05:00"
+//        startTime = 300
+//        print("timer setted 300 sec")
+//    }
+//    @IBAction func select10mseconds(){
+//        startTimer(time: 600)
+//        timeLabel.text = "10:00"
+//        startTime = 600
+//        print("timer setted 600 sec")
+//    }
+//
+    @IBAction func selectTimer(_ sender: UIButton){
+        startTime = sender.tag
+        startTimer(time: startTime)
+        print("timer setted" + "sec")
     }
     
     @IBAction func start(time: Int){
@@ -167,6 +173,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     @IBAction func selectSave(_ sender:Any){
+        //MARK: calculate
         pauseTime = countdown
         studyTime = startTime - pauseTime
         
@@ -179,7 +186,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                                                                 action in print("the ok button was tapped")
                 
             })
-            let animalAction: UIAlertAction = UIAlertAction(title:"animals",
+            let yeastkenAction: UIAlertAction = UIAlertAction(title:"yeastken",
                                                              style: .default,
                                                              handler: {
                                                                 action in print("the animal button was tapped")
@@ -187,15 +194,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             })
             //UIAlertControllerにActionを追加
             alert.addAction(defaultAction)
-            alert.addAction(animalAction)
+            alert.addAction(yeastkenAction)
             present(alert, animated: true, completion: nil)
             
         }else{
-            
-            //MARK: calculate studyTime
-            timer.invalidate()
-            print("saved the study time")
-            
             //MARK: save
             //1.put input memo into var
             //2.add input memo to old memos
@@ -212,7 +214,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             timeSaveData.set(studyTimes, forKey: "times")
             timeSaveData.set(now, forKey: "dates")
             
-            print("you studied "+"in "+String(studyTime)+" seconds")
+            print("you studied "+"in "+String(studyTime)+" seconds " + "and saved")
             
             //        //MARK: Alert
             //        let alert: UIAlertController = UIAlertController(title: "save", message: "The save is done", preferredStyle: .alert)
@@ -224,7 +226,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.performSegue(withIdentifier: "toCollection", sender: nil)
         }
     }
-    
     
     //MARK: UIPickerView
     //number of rows
