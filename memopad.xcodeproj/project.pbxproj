@@ -13,6 +13,7 @@
 		A43E478E2AF25C4D00F5B991 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A43E478C2AF25C4D00F5B991 /* Main.storyboard */; };
 		A43E47902AF25C5000F5B991 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A43E478F2AF25C5000F5B991 /* Assets.xcassets */; };
 		A43E47932AF25C5000F5B991 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A43E47912AF25C5000F5B991 /* LaunchScreen.storyboard */; };
+		A47EA2742B189C57007A18BA /* CustomListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47EA2732B189C57007A18BA /* CustomListCell.swift */; };
 		A494F53E2B0E09F000317593 /* TimeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A494F53D2B0E09F000317593 /* TimeCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		A43E478F2AF25C5000F5B991 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A43E47922AF25C5000F5B991 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A43E47942AF25C5000F5B991 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A47EA2732B189C57007A18BA /* CustomListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListCell.swift; sourceTree = "<group>"; };
 		A494F53D2B0E09F000317593 /* TimeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 				A43E478F2AF25C5000F5B991 /* Assets.xcassets */,
 				A43E47912AF25C5000F5B991 /* LaunchScreen.storyboard */,
 				A43E47942AF25C5000F5B991 /* Info.plist */,
+				A47EA2732B189C57007A18BA /* CustomListCell.swift */,
 			);
 			path = memopad;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A43E478B2AF25C4D00F5B991 /* ViewController.swift in Sources */,
+				A47EA2742B189C57007A18BA /* CustomListCell.swift in Sources */,
 				A43E47872AF25C4D00F5B991 /* AppDelegate.swift in Sources */,
 				A43E47892AF25C4D00F5B991 /* SceneDelegate.swift in Sources */,
 				A494F53E2B0E09F000317593 /* TimeCollectionViewController.swift in Sources */,

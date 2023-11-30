@@ -9,6 +9,7 @@ import UIKit
 import Foundation
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     //MARK: date
     var date = Date()
     let dateFormatter = DateFormatter()
@@ -37,7 +38,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBOutlet var pickerView: UIPickerView!
     let dataList = [
-        "-", "Japanese", "English", "Math"
+        "-", "Japanese", "English", "Math", "Physics", "Mechanics"
     ]
     
     
@@ -46,11 +47,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         super.viewDidLoad()
         timeLabel.text = "Select time"
         
-        //MARK: button
-        stopButton.layer.cornerRadius = 10
-        stopButton.imageView?.layer.cornerRadius = 10
-//        stopButton.setImage(UIImage(named: "pockemon"), for: .normal)
-//        stopButton.imageView?.contentMode = .scaleAspectFill
+//        //MARK: button
+//        stopButton.layer.cornerRadius = 10
+//        stopButton.imageView?.layer.cornerRadius = 10
 
         //MARK: pickerView
         pickerView.delegate = self
@@ -62,8 +61,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         createDateFormat()
         
         dateLabel.text = String(dateFormatter.string(from: date))
-//        studyDate = String(date)
-        print(date)
         
         //MARK: timer
         delete()
@@ -71,6 +68,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //MARK: pickerView
         pickerView.delegate = self
         pickerView.dataSource = self
+        
+        //MARK: userdefaults to arrey
+        studySubjects = timeSaveData.object(forKey: "subjects") as? [String] ?? []
+        studyTimes = timeSaveData.object(forKey: "times") as? [String] ?? []
     }
     
     
@@ -146,7 +147,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func selectTimer(_ sender: UIButton){
         startTime = sender.tag
         startTimer(time: startTime)
-        print("timer setted" + "sec")
+        print("timer setted" + String(sender.tag) + "sec")
     }
     
     @IBAction func start(time: Int){
@@ -161,18 +162,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     @IBAction func delete(){
+        if timer != nil {
+            timer.invalidate()
+        }
         startTime = 0
         pauseTime = 0
         countdown = 0
         timeLabel.text = ""
         if timer != nil{
             timer.invalidate()
-            print("the timer was deleted")
+            print("delete()_the timer was deleted")
         }
         timeLabel.text = "Select time"
     }
     
-    @IBAction func selectSave(_ sender:Any){
+    @IBAction func save(_ sender:Any){
         //MARK: calculate
         pauseTime = countdown
         studyTime = startTime - pauseTime
@@ -189,7 +193,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let yeastkenAction: UIAlertAction = UIAlertAction(title:"yeastken",
                                                              style: .default,
                                                              handler: {
-                                                                action in print("the animal button was tapped")
+                                                                action in print("the yeastken button was tapped")
                                                                 self.performSegue(withIdentifier: "toCollection", sender: nil)
             })
             //UIAlertControllerにActionを追加
@@ -198,6 +202,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             present(alert, animated: true, completion: nil)
             
         }else{
+            timer.invalidate()
+            
             //MARK: save
             //1.put input memo into var
             //2.add input memo to old memos
@@ -205,24 +211,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             studyTimes.append(String(studyTime))
             studyDates.append(now)
             
-            print(studySubjects)
-            print(studyTimes)
-            print(now)
-            
             //3.reload userdefaults
             timeSaveData.set(studySubjects, forKey: "subjects")
             timeSaveData.set(studyTimes, forKey: "times")
             timeSaveData.set(now, forKey: "dates")
             
-            print("you studied "+"in "+String(studyTime)+" seconds " + "and saved")
-            
-            //        //MARK: Alert
-            //        let alert: UIAlertController = UIAlertController(title: "save", message: "The save is done", preferredStyle: .alert)
-            //        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in print("the ok button was tapped")
-            //            self.performSegue(withIdentifier: "toCollection", sender: nil)
-            //
-            //        }))
-            //        present(alert, animated: true, completion: nil)
+            print("save()_" + "you studied "+"in "+String(studyTime)+" seconds " + "and saved")
             self.performSegue(withIdentifier: "toCollection", sender: nil)
         }
     }
@@ -246,6 +240,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     //acts when select Row
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         studySubject = dataList[row]
-        print(studySubject + " selected")
+        print("UiPickerView_" + studySubject + " selected")
     }
 }

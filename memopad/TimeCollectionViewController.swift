@@ -24,43 +24,39 @@ class TimeCollectionViewController: UIViewController, UICollectionViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //MARK: collecting study data
-        let temp1: [String] = []
-        let temp2: [String] = []
-        timeSaveData.register(defaults: ["subjects": temp1, "times": temp2])
-//        timeSaveData.register(defaults: ["subjects": [], "times": [], "dates": []])
-        
-//        studyDates = timeSaveData.object(forKey: "dates") as! [String]
+
+//        //MARK: userdefaults' initial data
+//        let temp1: [String] = []
+//        let temp2: [String] = []
+//        timeSaveData.register(defaults: ["subjects": temp1, "times": temp2])
         
         //MARK: collectionView
-        //datasource
         collectionView.dataSource = self
         collectionView.delegate = self
-        //layout
         let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
         collectionView.collectionViewLayout = UICollectionViewCompositionalLayout.list(using: configuration)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        //MARK: userdefaults to arrey
         studySubjects = timeSaveData.object(forKey: "subjects") as? [String] ?? []
         studyTimes = timeSaveData.object(forKey: "times") as? [String] ?? []
-        print(studySubjects)
+
         collectionView.reloadData()
         
-        //MARK: calculate totalTime
         sumStudyTime()
-        totalLabel.text = "Total is " + String(totalTime)
-        
         grow()
     }
+
     
     func sumStudyTime(){
+        totalTime = 0
         for i in 0..<studyTimes.count {
-            totalTime += Int(studyTimes[i]) ?? 0
+            totalTime += Int(studyTimes[i])!
         }
-        print("total studyTime is " + String(totalTime) + " seconds")
+        totalLabel.text = "Total is " + String(totalTime)
+        print("sumStudyTime実行 " + "totalTime = " + String(totalTime))
     }
     
     func grow(){
@@ -81,9 +77,7 @@ class TimeCollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        
         var contentConfiguration = UIListContentConfiguration.cell()
         
         contentConfiguration.text = studySubjects[indexPath.item]
@@ -91,8 +85,34 @@ class TimeCollectionViewController: UIViewController, UICollectionViewDataSource
         
         cell.contentConfiguration = contentConfiguration
         
-        return cell
+        // セルにスワイプジェスチャーを追加する
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        swipeGesture.direction = .left
+        cell.addGestureRecognizer(swipeGesture)
         
+        return cell
     }
-
+    @objc func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
+        if let swipeCell = gesture.view as? UICollectionViewCell {
+            if let indexPath = collectionView.indexPath(for: swipeCell) {
+                
+                // スワイプが完了したときの処理
+                if gesture.state == .ended {
+                    // セルを削除する処理
+                    studySubjects.remove(at: indexPath.item)
+                    studyTimes.remove(at: indexPath.item)
+                    
+                    timeSaveData.set(studySubjects, forKey: "subjects")
+                    timeSaveData.set(studyTimes, forKey: "times")
+                    studyTimes = timeSaveData.object(forKey: "times") as? [String] ?? []
+                    
+                    collectionView.deleteItems(at: [indexPath])
+                    
+                    sumStudyTime()
+                    grow()
+                    print("スワイプ実行")
+                }
+            }
+        }
+    }
 }
