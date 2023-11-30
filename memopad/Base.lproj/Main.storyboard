@@ -32,12 +32,18 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="5m"/>
+                                <connections>
+                                    <action selector="selectTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LC1-ev-Wda"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="60" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9n-7E-0xd">
                                 <rect key="frame" x="118" y="542" width="46" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="1m"/>
+                                <connections>
+                                    <action selector="selectTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bCB-88-qeV"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3M-Fl-Ybt">
                                 <rect key="frame" x="16" y="655" width="93" height="53"/>
@@ -68,6 +74,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="10m"/>
+                                <connections>
+                                    <action selector="selectTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YM8-m6-1ih"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WFc-UL-1Jo">
                                 <rect key="frame" x="286" y="655" width="91" height="53"/>
